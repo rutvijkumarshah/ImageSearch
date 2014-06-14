@@ -1,10 +1,11 @@
-package com.github.rutvijkumar.imagesearch;
-
-import com.github.rutvijkumar.imagesearch.models.ImageResult;
-import com.loopj.android.image.SmartImageView;
+package com.github.rutvijkumar.imagesearch.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.github.rutvijkumar.imagesearch.R;
+import com.github.rutvijkumar.imagesearch.models.ImageResult;
+import com.loopj.android.image.SmartImageView;
 
 public class ImageDisplayActivity extends Activity {
 

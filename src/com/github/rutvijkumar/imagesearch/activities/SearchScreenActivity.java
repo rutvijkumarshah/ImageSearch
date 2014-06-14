@@ -1,4 +1,4 @@
-package com.github.rutvijkumar.imagesearch;
+package com.github.rutvijkumar.imagesearch.activities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,11 +19,13 @@ import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 
+import com.github.rutvijkumar.imagesearch.R;
 import com.github.rutvijkumar.imagesearch.adapters.ImageResultAdapter;
 import com.github.rutvijkumar.imagesearch.api.CallBack;
 import com.github.rutvijkumar.imagesearch.api.ImageProvider;
 import com.github.rutvijkumar.imagesearch.api.ImageProviders;
 import com.github.rutvijkumar.imagesearch.api.SearchFilter;
+import com.github.rutvijkumar.imagesearch.helpers.EndlessScrollListener;
 import com.github.rutvijkumar.imagesearch.models.ImageResult;
 
 public class SearchScreenActivity extends Activity {
@@ -30,6 +33,8 @@ public class SearchScreenActivity extends Activity {
 	private List<ImageResult> imageResults=new ArrayList<ImageResult>();
 	private  ImageResultAdapter adapter;
 	private GridView imagesGridView;
+	private String searchKeyword;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,19 +54,27 @@ public class SearchScreenActivity extends Activity {
 				startActivity(fullDisplayIntent);
 			}
 		});
+		imagesGridView.setOnScrollListener(new EndlessScrollListener() {
+			
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				Log.d("SEARCH_SCREEN_ACTIVITY ", "Page="+String.valueOf(page));
+				search(page);
+			}
+		});
 		
 	}
 	
-	private void search(String keyword) {
+	private void search(int start) {
+		
 		ImageProvider imageProvider = ImageProviders.getDefaultImageProvider(new SearchFilter());
-		imageProvider.searchImages(keyword, 0, 8, new CallBack() {
+		imageProvider.searchImages(this.searchKeyword, start, new CallBack() {
 			
 			@Override
 			public void onResult(boolean isSuccessful, List<ImageResult> images,
 					JSONArray failureInfo) {
 				if(isSuccessful) {
 					if(images!=null && !images.isEmpty()) {
-						imageResults.clear();
 						adapter.addAll(images);
 					}
 				}
@@ -69,6 +82,7 @@ public class SearchScreenActivity extends Activity {
 			}
 		});
 	}
+	
 	
 	   @Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
@@ -83,6 +97,16 @@ public class SearchScreenActivity extends Activity {
 	    }
 	  
 
+	private void newSearch(String keyword) {
+		if(! keyword.equals(this.searchKeyword)){
+			adapter.clear();
+			imageResults.clear();
+			this.searchKeyword=keyword;
+			search(0);
+		}
+		
+		
+	}   
 
 	private void setupSearchView(SearchView searchView) {
 	
@@ -90,7 +114,10 @@ public class SearchScreenActivity extends Activity {
 			
 			@Override
 			public boolean onQueryTextSubmit(String query) {
-				search(query);
+				if(query!=null && !query.isEmpty()) {
+					newSearch(query);
+				}
+				
 				return true;
 			}
 			

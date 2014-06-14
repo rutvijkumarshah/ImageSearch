@@ -47,12 +47,13 @@ public class GoogleImageProvider extends ImageProvider {
 
 	private static String LOG_TAG="GOOGLE_IMG_SEARCH";
 	private static final String BASE_URL="https://ajax.googleapis.com/ajax/services/search/images?v=1.0";
+	private static final int PAGE_SIZE=8;
 	
 	public GoogleImageProvider(SearchFilter filter) {
 		super(filter);
 	}
 
-	private String params(int start, int page) {
+	private String params(int start) {
 		StringBuilder urlBuilder=new StringBuilder();
 		ImageColor imgColor=filter.getImageColor();
 		ImageFileType imageFileType = filter.getImageFileType();
@@ -60,8 +61,8 @@ public class GoogleImageProvider extends ImageProvider {
 		ImageType imageType = filter.getImageType();
 		String site = filter.getSite();
 		
-		urlBuilder.append("rsz="+(page >8 ? 8 :page));
-		urlBuilder.append("&start="+start+"&");
+		urlBuilder.append("rsz="+PAGE_SIZE);
+		urlBuilder.append("&start="+start*7+"&");
 		
 		if(imgColor !=null) {
 			urlBuilder.append("imgcolor="+imgColor.toString().toLowerCase());
@@ -90,9 +91,9 @@ public class GoogleImageProvider extends ImageProvider {
 		return urlBuilder.toString();
 	}
 	
-	protected String generateSearchURL(String keyword,int pageSize, int start) {
+	protected String generateSearchURL(String keyword, int start) {
 		
-		return BASE_URL+"&"+params(pageSize,start)+"&q="+Uri.encode(keyword);
+		return BASE_URL+"&"+params(start)+"&q="+Uri.encode(keyword);
 	}
 
 	protected ImageResult parseJsonObject(JSONObject json) throws JSONException {
@@ -104,14 +105,14 @@ public class GoogleImageProvider extends ImageProvider {
 	}
 	
 	@Override
-	protected void process(String url, final CallBack callback) {
+	protected void process(final String url, final CallBack callback) {
 		// TODO Auto-generated method stub
 		Log.d(LOG_TAG,url);
 		AsyncHttpClient client=new AsyncHttpClient();
-		client.get(url.toString(), new JsonHttpResponseHandler() {
+		client.get(url, new JsonHttpResponseHandler() {
 			
 			@Override
-			public void onSuccess(JSONObject response) {
+			public void onSuccess(final JSONObject response) {
 				JSONArray imageResults=null;
 				List<ImageResult> results=null;
 				try {
@@ -125,6 +126,8 @@ public class GoogleImageProvider extends ImageProvider {
 					}
 					callback.onResult(true, results, null);
 				} catch (JSONException e) {
+					Log.e(LOG_TAG,"URL="+url);
+					Log.e(LOG_TAG,"Response=+"+response.toString());
 					Log.e(LOG_TAG, "Exception while parsing google image response", e);
 				}
 			}
