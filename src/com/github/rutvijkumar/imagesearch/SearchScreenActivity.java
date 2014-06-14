@@ -6,10 +6,14 @@ import java.util.List;
 import org.json.JSONArray;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
@@ -34,6 +38,17 @@ public class SearchScreenActivity extends Activity {
 		imagesGridView=(GridView)findViewById(R.id.img_resultgrid);
 		adapter=new ImageResultAdapter(this, imageResults);
 		imagesGridView.setAdapter(adapter);
+		imagesGridView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Intent fullDisplayIntent=new Intent(getApplicationContext(),ImageDisplayActivity.class);
+				ImageResult imResult=imageResults.get(position);
+				fullDisplayIntent.putExtra("fullImageInfo", imResult);
+				startActivity(fullDisplayIntent);
+			}
+		});
 		
 	}
 	

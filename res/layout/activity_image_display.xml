@@ -4,14 +4,15 @@
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}" >
 
-    <GridView
-        android:id="@+id/img_resultgrid"
-        android:layout_width="match_parent"
+    <com.loopj.android.image.SmartImageView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fullViewImage"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:maxWidth="600dp"
         android:layout_alignParentTop="true"
-        android:layout_margin="16dp"
-        android:numColumns="3" >
-    </GridView>
-
+        android:src="@android:drawable/screen_background_light" 
+       />
+    
 </RelativeLayout>

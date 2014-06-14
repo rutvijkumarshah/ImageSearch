@@ -48,14 +48,14 @@ public class ImageResultAdapter extends ArrayAdapter<ImageResult> {
 		SmartImageView smartImageView;
 		if(convertView == null) {
 			LayoutInflater inflater = LayoutInflater.from(getContext());
-			smartImageView=(SmartImageView)inflater.inflate(R.xml.item_image_result, parent);
+			smartImageView=(SmartImageView)inflater.inflate(R.xml.item_image_result, parent,false);
 			
 		}else {
 			smartImageView=(SmartImageView)convertView;
 			smartImageView.setImageResource(android.R.color.transparent);
 		}
 		smartImageView.setImageUrl(imageResult.getThumbUrl());
-		return super.getView(position, convertView, parent);
+		return smartImageView;
 	}
 
 }

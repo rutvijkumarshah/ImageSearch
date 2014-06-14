@@ -14,11 +14,13 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_search=0x7f080001;
-        public static final int img_resultgrid=0x7f080000;
+        public static final int action_search=0x7f080002;
+        public static final int fullViewImage=0x7f080000;
+        public static final int img_resultgrid=0x7f080001;
     }
     public static final class layout {
-        public static final int activity_search_screen=0x7f030000;
+        public static final int activity_image_display=0x7f030000;
+        public static final int activity_search_screen=0x7f030001;
     }
     public static final class menu {
         public static final int searchview_in_menu=0x7f070000;
@@ -27,6 +29,7 @@ public final class R {
         public static final int app_name=0x7f050000;
         public static final int hello_world=0x7f050001;
         public static final int search_hint=0x7f050002;
+        public static final int title_activity_image_display=0x7f050003;
     }
     public static final class style {
         /** 

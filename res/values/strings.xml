@@ -4,4 +4,6 @@
     <string name="app_name">ImageSearch</string>
     <string name="hello_world">Hello world!</string>
     <string name="search_hint">Search Images </string>
+    <string name="title_activity_image_display">ImageDisplay</string>
+
 </resources>

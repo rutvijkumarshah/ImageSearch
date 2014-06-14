@@ -9,6 +9,7 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -18,12 +19,15 @@
             android:name="com.github.rutvijkumar.imagesearch.SearchScreenActivity"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />    
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.github.rutvijkumar.imagesearch.ImageDisplayActivity"
+            android:label="@string/title_activity_image_display" >
         </activity>
     </application>
 
 </manifest>
-
-			

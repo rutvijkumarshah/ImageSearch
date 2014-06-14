@@ -21,6 +21,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ***/
 
 package com.github.rutvijkumar.imagesearch.models;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /***
  * 
  * Image represents image from search result.
@@ -28,89 +32,116 @@ package com.github.rutvijkumar.imagesearch.models;
  * @author Rutvijkumar Shah
  *
  */
-public class ImageResult {
-	
-	private String imageUrl ;
-	private String thumbUrl;
-	private String title;
-	
-	public ImageResult() {
-		
-	}
-	public ImageResult(String imageUrl, String thumbUrl, String title) {
-		super();
-		this.imageUrl = imageUrl;
-		this.thumbUrl = thumbUrl;
-		this.title = title;
-	}
-	
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
-	}
-	public String getThumbUrl() {
-		return thumbUrl;
-	}
-	public void setThumbUrl(String thumbUrl) {
-		this.thumbUrl = thumbUrl;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
 
-	@Override
-	public String toString() {
-		return "Image [imageUrl=" + imageUrl + ", thumbUrl=" + thumbUrl
-				+ ", title=" + title + ", getImageUrl()=" + getImageUrl()
-				+ ", getThumbUrl()=" + getThumbUrl() + ", getTitle()="
-				+ getTitle() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
-	}
+public class ImageResult implements Parcelable {
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((imageUrl == null) ? 0 : imageUrl.hashCode());
-		result = prime * result
-				+ ((thumbUrl == null) ? 0 : thumbUrl.hashCode());
-		result = prime * result + ((title == null) ? 0 : title.hashCode());
-		return result;
-	}
+    private String imageUrl ;
+    private String thumbUrl;
+    private String title;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ImageResult other = (ImageResult) obj;
-		if (imageUrl == null) {
-			if (other.imageUrl != null)
-				return false;
-		} else if (!imageUrl.equals(other.imageUrl))
-			return false;
-		if (thumbUrl == null) {
-			if (other.thumbUrl != null)
-				return false;
-		} else if (!thumbUrl.equals(other.thumbUrl))
-			return false;
-		if (title == null) {
-			if (other.title != null)
-				return false;
-		} else if (!title.equals(other.title))
-			return false;
-		return true;
-	}
-	
-	
-	
+    public ImageResult() {
+
+    }
+    public ImageResult(String imageUrl, String thumbUrl, String title) {
+        super();
+        this.imageUrl = imageUrl;
+        this.thumbUrl = thumbUrl;
+        this.title = title;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+    public String getThumbUrl() {
+        return thumbUrl;
+    }
+    public void setThumbUrl(String thumbUrl) {
+        this.thumbUrl = thumbUrl;
+    }
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Image [imageUrl=" + imageUrl + ", thumbUrl=" + thumbUrl
+                + ", title=" + title + ", getImageUrl()=" + getImageUrl()
+                + ", getThumbUrl()=" + getThumbUrl() + ", getTitle()="
+                + getTitle() + ", getClass()=" + getClass() + ", hashCode()="
+                + hashCode() + ", toString()=" + super.toString() + "]";
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((imageUrl == null) ? 0 : imageUrl.hashCode());
+        result = prime * result
+                + ((thumbUrl == null) ? 0 : thumbUrl.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ImageResult other = (ImageResult) obj;
+        if (imageUrl == null) {
+            if (other.imageUrl != null)
+                return false;
+        } else if (!imageUrl.equals(other.imageUrl))
+            return false;
+        if (thumbUrl == null) {
+            if (other.thumbUrl != null)
+                return false;
+        } else if (!thumbUrl.equals(other.thumbUrl))
+            return false;
+        if (title == null) {
+            if (other.title != null)
+                return false;
+        } else if (!title.equals(other.title))
+            return false;
+        return true;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.imageUrl);
+        dest.writeString(this.thumbUrl);
+        dest.writeString(this.title);
+    }
+
+    private ImageResult(Parcel in) {
+        this.imageUrl = in.readString();
+        this.thumbUrl = in.readString();
+        this.title = in.readString();
+    }
+
+    public static Parcelable.Creator<ImageResult> CREATOR = new Parcelable.Creator<ImageResult>() {
+        public ImageResult createFromParcel(Parcel source) {
+            return new ImageResult(source);
+        }
+
+        public ImageResult[] newArray(int size) {
+            return new ImageResult[size];
+        }
+    };
 }
