@@ -22,7 +22,6 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.github.rutvijkumar.imagesearch.api.google;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -48,7 +47,7 @@ public class GoogleImageProvider extends ImageProvider {
 	private static String LOG_TAG="GOOGLE_IMG_SEARCH";
 	private static final String BASE_URL="https://ajax.googleapis.com/ajax/services/search/images?v=1.0";
 	private static final int PAGE_SIZE=8;
-	
+
 	public GoogleImageProvider(SearchFilter filter) {
 		super(filter);
 	}
@@ -106,13 +105,12 @@ public class GoogleImageProvider extends ImageProvider {
 	
 	@Override
 	protected void process(final String url, final CallBack callback) {
-		// TODO Auto-generated method stub
-		Log.d(LOG_TAG,url);
 		AsyncHttpClient client=new AsyncHttpClient();
 		client.get(url, new JsonHttpResponseHandler() {
 			
 			@Override
 			public void onSuccess(final JSONObject response) {
+				
 				JSONArray imageResults=null;
 				List<ImageResult> results=null;
 				try {
@@ -138,6 +136,12 @@ public class GoogleImageProvider extends ImageProvider {
 				 callback.onResult(false,null, errorResponse);
 			}
 		});
+	}
+
+	@Override
+	protected int maxPagesSupported() {
+		// TODO Auto-generated method stub
+		return 8;
 	}
 
 }

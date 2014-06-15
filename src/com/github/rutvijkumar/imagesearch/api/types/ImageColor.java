@@ -22,7 +22,57 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.github.rutvijkumar.imagesearch.api.types;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
 public enum ImageColor {
 
-	BLACK,BLUE,BROWN,GRAY,GREEN,ORANGE,PINK,PURPLE,RED,TEAL,WHITE,YELLOW
+	BLACK,BLUE,BROWN,GRAY,GREEN,ORANGE,PINK,PURPLE,RED,TEAL,WHITE,YELLOW;
+	
+	/***
+	 * Using map over reflection based valueOf Implementation.
+	 */
+	private static Map<String,ImageColor> valMap=new LinkedHashMap<String,ImageColor>();
+	
+	static {
+		
+		valMap.put("ANY",null);
+		valMap.put("BLACK",BLACK);
+		valMap.put("BLUE",BLUE);
+		valMap.put("BROWN",BROWN);
+		valMap.put("GRAY",GRAY);
+		valMap.put("GREEN",GREEN);
+		valMap.put("ORANGE",ORANGE);
+		valMap.put("PINK",PINK);
+		valMap.put("PURPLE",PURPLE);
+		valMap.put("RED",RED);
+		valMap.put("TEAL",TEAL);
+		valMap.put("WHITE",WHITE);
+		valMap.put("YELLOW",YELLOW);
+		
+	}
+	
+	public static ImageColor getValueOf(String val) {
+		ImageColor color=null;
+		if(val!=null) {
+			color= valMap.get(val.toUpperCase());
+		}
+		return color;
+		
+	}
+	
+	public static int getPosition(String val) {
+		int position=-1;
+		if(val!=null) {
+			position=new ArrayList<String>(getValues()).indexOf(val.toUpperCase());
+		}
+		return position;
+	}
+	public static Set<String> getValues() {
+		return valMap.keySet();
+	}
+	
+
 }

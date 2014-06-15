@@ -29,14 +29,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
 import com.github.rutvijkumar.imagesearch.models.ImageResult;
 
 
 public abstract class ImageProvider {
 	
 	protected SearchFilter filter;
+	
 	
 	public ImageProvider(SearchFilter filter) {
 		this.filter=filter;
@@ -45,9 +44,10 @@ public abstract class ImageProvider {
 		this.filter=filter;
 	}
 	public void searchImages(String keyword,int start, CallBack callback) {
-		Log.d("IMAGE_PROVIDER","start="+start);
+		if(start > maxPagesSupported()) {
+			return;
+		}
 		String url =generateSearchURL(keyword, start);
-		Log.d("IMAGE_PROVIDER","url="+url);
 		process(url,callback);
 	}
 	protected List<ImageResult> parseImageResults(JSONArray jsonResults) throws JSONException {
@@ -62,4 +62,5 @@ public abstract class ImageProvider {
 	abstract protected ImageResult parseJsonObject(JSONObject jsonObj) throws JSONException;
 	abstract protected String generateSearchURL(String keyword,int start);
 	abstract protected void process(String url,CallBack callback);
+	abstract protected int maxPagesSupported();
 }

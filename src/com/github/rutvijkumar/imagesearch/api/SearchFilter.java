@@ -22,13 +22,16 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.github.rutvijkumar.imagesearch.api;
 
+import java.io.Serializable;
+
 import com.github.rutvijkumar.imagesearch.api.types.ImageColor;
 import com.github.rutvijkumar.imagesearch.api.types.ImageFileType;
 import com.github.rutvijkumar.imagesearch.api.types.ImageSize;
 import com.github.rutvijkumar.imagesearch.api.types.ImageType;
 
-public class SearchFilter {
+public class SearchFilter implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private ImageSize imageSize;
 	private ImageColor imageColor;
 	private ImageType imageType;

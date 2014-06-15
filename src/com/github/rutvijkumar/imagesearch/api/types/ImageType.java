@@ -22,6 +22,45 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.github.rutvijkumar.imagesearch.api.types;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
 public enum ImageType {
-	FACE,PHOTO,CLIPART,LINEART
+	ANY,FACE,PHOTO,CLIPART,LINEART;
+	
+	/***
+	 * Using map over reflection based valueOf Implementation.
+	 */
+	private static Map<String,ImageType> valMap=new LinkedHashMap<String,ImageType>();
+	
+	static {
+		valMap.put("ANY",null);
+		valMap.put("FACE",FACE);
+		valMap.put("PHOTO",PHOTO);
+		valMap.put("CLIPART",CLIPART);
+		valMap.put("LINEART",LINEART);
+	}
+	
+	public static ImageType getValueOf(String val) {
+		ImageType type=null;
+		if(val!=null) {
+			type= valMap.get(val.toUpperCase());
+		}
+		return type;
+		
+	}
+	
+	public static int getPosition(String val) {
+		int position=-1;
+		if(val!=null) {
+			position=new ArrayList<String>(getValues()).indexOf(val.toUpperCase());
+		}
+		return position;
+	}
+	
+	public static Set<String> getValues() {
+		return valMap.keySet();
+	}
 }

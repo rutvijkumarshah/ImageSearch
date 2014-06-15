@@ -22,6 +22,49 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 package com.github.rutvijkumar.imagesearch.api.types;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
 public enum ImageFileType {
-	JPG,PNG,GIF,BMP
+	JPG,PNG,GIF,BMP;
+	
+
+	/***
+	 * Using map over reflection based valueOf Implementation.
+	 */
+	private static Map<String,ImageFileType> valMap=new LinkedHashMap<String,ImageFileType>();
+	
+	static {
+		valMap.put("ANY", null);
+		valMap.put("JPG",JPG);
+		valMap.put("PNG",PNG);
+		valMap.put("GIF",GIF);
+		valMap.put("BMP",BMP);
+	}
+	
+	public static ImageFileType getValueOf(String val) {
+		ImageFileType fileType=null;
+		if(val!=null) {
+			fileType= valMap.get(val.toUpperCase());
+		}
+		return fileType;
+		
+	}
+	
+	public static int getPosition(String val) {
+		int position=-1;
+		if(val!=null) {
+			position=new ArrayList<String>(getValues()).indexOf(val.toUpperCase());
+		}
+		return position;
+	}
+	
+	public static Set<String> getValues() {
+		return valMap.keySet();
+	}
+
+	
+	
 }
