@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
+import android.view.Window;
 import android.widget.ShareActionProvider;
 
 import com.github.rutvijkumar.imagesearch.R;
@@ -30,6 +31,7 @@ public class ImageDisplayActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_image_display);
 		result = (ImageResult) getIntent().getParcelableExtra("fullImageInfo");
 		ivImage = (SmartImageView) findViewById(R.id.fullViewImage);

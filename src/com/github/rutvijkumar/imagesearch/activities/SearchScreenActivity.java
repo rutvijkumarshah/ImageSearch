@@ -10,12 +10,14 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -43,7 +45,8 @@ public class SearchScreenActivity extends FragmentActivity {
 	private SearchFilter filter=new SearchFilter();
 	private SearchView searchView;
 
-	@Override
+	
+		@Override
     protected void onNewIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
@@ -69,6 +72,7 @@ public class SearchScreenActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); 
 		setContentView(R.layout.activity_search_screen);
 		imagesGridView = (GridView) findViewById(R.id.img_resultgrid);
 		adapter = new ImageResultAdapter(this, imageResults);
@@ -103,6 +107,9 @@ public class SearchScreenActivity extends FragmentActivity {
 	}
 
 	private void search(int start) {
+		
+		setProgressBarIndeterminateVisibility(true);
+
 		ImageProvider imageProvider = ImageProviders
 				.getDefaultImageProvider(this.filter);
 		imageProvider.searchImages(this.searchKeyword, start, new CallBack() {
@@ -110,6 +117,8 @@ public class SearchScreenActivity extends FragmentActivity {
 			@Override
 			public void onResult(boolean isSuccessful,
 					List<ImageResult> images, JSONArray failureInfo) {
+				setProgressBarIndeterminateVisibility(false);
+
 				if (isSuccessful) {
 					if (images != null && !images.isEmpty()) {
 						adapter.addAll(images);
