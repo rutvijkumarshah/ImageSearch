@@ -25,6 +25,7 @@ import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
+import com.etsy.android.grid.StaggeredGridView;
 import com.github.rutvijkumar.imagesearch.R;
 import com.github.rutvijkumar.imagesearch.adapters.ImageResultAdapter;
 import com.github.rutvijkumar.imagesearch.api.CallBack;
@@ -39,7 +40,8 @@ public class SearchScreenActivity extends FragmentActivity {
 
 	private List<ImageResult> imageResults = new ArrayList<ImageResult>();
 	private ImageResultAdapter adapter;
-	private GridView imagesGridView;
+	//private GridView imagesGridView;
+	private StaggeredGridView imagesGridView;
 	private String searchKeyword;
 	private SearchFilter filter=new SearchFilter();
 	private SearchView searchView;
@@ -73,7 +75,8 @@ public class SearchScreenActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS); 
 		setContentView(R.layout.activity_search_screen);
-		imagesGridView = (GridView) findViewById(R.id.img_resultgrid);
+		imagesGridView = (StaggeredGridView) findViewById(R.id.img_resultgrid);
+		//imagesGridView = (GridView) findViewById(R.id.img_resultgrid);
 		adapter = new ImageResultAdapter(this, imageResults);
 		imagesGridView.setAdapter(adapter);
 		imagesGridView.setOnItemClickListener(new OnItemClickListener() {

@@ -3,7 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${packageName}.${activityClass}" >
-  
+    
+    
+ <com.etsy.android.grid.StaggeredGridView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/img_resultgrid"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:item_margin="8dp"
+    app:column_count="3" />
+     
+
+  <!-- 
     <GridView
         android:id="@+id/img_resultgrid"
         android:layout_width="match_parent"
@@ -13,5 +27,5 @@
         android:layout_margin="16dp"
         android:numColumns="3" >
     </GridView>
-
+  -->
 </RelativeLayout>

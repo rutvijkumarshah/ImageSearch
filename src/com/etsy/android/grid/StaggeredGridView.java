@@ -16,6 +16,8 @@
 
 package com.etsy.android.grid;
 
+import java.util.Arrays;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Parcel;
@@ -26,7 +28,7 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Arrays;
+import com.github.rutvijkumar.imagesearch.R;
 
 /**
  * A staggered grid view which supports multiple columns with rows of varying sizes.
