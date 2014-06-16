@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.ShareActionProvider;
+import android.widget.Toast;
 
 import com.github.rutvijkumar.imagesearch.R;
 import com.github.rutvijkumar.imagesearch.models.ImageResult;
@@ -27,6 +28,7 @@ public class ImageDisplayActivity extends Activity {
 	private SmartImageView ivImage;
 	private ImageResult result;
 	private Uri fileUrl;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class ImageDisplayActivity extends Activity {
 
 	private Uri getImageUri(Bitmap bitmap) {
 		FileOutputStream out = null;
-		Uri fileUrl = null;
+		Uri fileUri = null;
 		if (bitmap != null) {
 		
 			try {
@@ -73,22 +75,26 @@ public class ImageDisplayActivity extends Activity {
 								.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
 						fileName);
 				out = new FileOutputStream(file);
-				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+				bitmap.compress(Bitmap.CompressFormat.PNG, 80, out);
 				out.flush();
 				out.close();
-				fileUrl = Uri.fromFile(file);
+				fileUri = Uri.fromFile(file);
+				Toast.makeText(this, "Size="+(file.length()/1024)+" KB", Toast.LENGTH_LONG).show();
 			} catch (IOException e) {
 				Log.e("IMAGE_DISPAY", e.getLocalizedMessage(), e);
 			}
 		}
-		return fileUrl;
+		return fileUri;
 	}
 
 	/** Returns a share intent */
 	private Intent getDefaultShareIntent() {
 		Intent shareIntent = new Intent(Intent.ACTION_SEND);
 		shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-		shareIntent.setType("image/*");
+		//shareIntent.setType("image/*");
+		shareIntent.setType("image/png");
+		shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Attached Image");
+		shareIntent.putExtra(Intent.EXTRA_TEXT,"  ");
 		shareIntent.putExtra(Intent.EXTRA_STREAM, fileUrl);
 		return shareIntent;
 
