@@ -12,22 +12,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
 import com.etsy.android.grid.StaggeredGridView;
 import com.github.rutvijkumar.imagesearch.R;
-import com.github.rutvijkumar.imagesearch.adapters.ImageResultAdapter;
+import com.github.rutvijkumar.imagesearch.adapters.ImageResultAdapterStaggerd;
 import com.github.rutvijkumar.imagesearch.api.CallBack;
 import com.github.rutvijkumar.imagesearch.api.ImageProvider;
 import com.github.rutvijkumar.imagesearch.api.ImageProviders;
@@ -36,11 +38,13 @@ import com.github.rutvijkumar.imagesearch.fragments.SettingsDialog;
 import com.github.rutvijkumar.imagesearch.helpers.EndlessScrollListener;
 import com.github.rutvijkumar.imagesearch.models.ImageResult;
 
-public class SearchScreenActivity extends FragmentActivity {
+public class SearchScreenActivity extends FragmentActivity  implements OnScrollListener{
 
 	private List<ImageResult> imageResults = new ArrayList<ImageResult>();
-	private ImageResultAdapter adapter;
+	//private ImageResultAdapter adapter;
 	//private GridView imagesGridView;
+	
+	private ImageResultAdapterStaggerd adapter;
 	private StaggeredGridView imagesGridView;
 	private String searchKeyword;
 	private SearchFilter filter=new SearchFilter();
@@ -77,7 +81,8 @@ public class SearchScreenActivity extends FragmentActivity {
 		setContentView(R.layout.activity_search_screen);
 		imagesGridView = (StaggeredGridView) findViewById(R.id.img_resultgrid);
 		//imagesGridView = (GridView) findViewById(R.id.img_resultgrid);
-		adapter = new ImageResultAdapter(this, imageResults);
+		//adapter = new ImageResultAdapter(this, imageResults);
+		adapter= new ImageResultAdapterStaggerd(this, imageResults);
 		imagesGridView.setAdapter(adapter);
 		imagesGridView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -91,13 +96,15 @@ public class SearchScreenActivity extends FragmentActivity {
 				startActivity(fullDisplayIntent);
 			}
 		});
-		imagesGridView.setOnScrollListener(new EndlessScrollListener() {
-
-			@Override
-			public void onLoadMore(int page, int totalItemsCount) {
-				search(page);
-			}
-		});
+		
+		imagesGridView.setOnScrollListener(this);
+//		imagesGridView.setOnScrollListener(new EndlessScrollListener() {
+//
+//			@Override
+//			public void onLoadMore(int page, int totalItemsCount) {
+//				search(page);
+//			}
+//		});
 	    Intent intent = getIntent();
 	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	      String query = intent.getStringExtra(SearchManager.QUERY);
@@ -212,6 +219,22 @@ public class SearchScreenActivity extends FragmentActivity {
 				return false;
 			}
 		});
+	}
+
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem,
+			int visibleItemCount, int totalItemCount) {
+		// TODO Auto-generated method stub
+		
+		Log.d("INFINITE_SCROLL", )
 	}
 
 }

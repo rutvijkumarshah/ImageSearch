@@ -97,8 +97,8 @@ containing a value of this type.
         public static final int loading=0x7f020003;
     }
     public static final class id {
-        public static final int action_filter=0x7f09000f;
-        public static final int action_search=0x7f09000e;
+        public static final int action_filter=0x7f090011;
+        public static final int action_search=0x7f090010;
         public static final int bt_block=0x7f09000b;
         public static final int btnCancel=0x7f09000c;
         public static final int btnSearch=0x7f09000d;
@@ -108,8 +108,10 @@ containing a value of this type.
         public static final int imageFileType_block=0x7f090006;
         public static final int imageSize_block=0x7f090002;
         public static final int imageType_block=0x7f090008;
+        public static final int imgView=0x7f09000f;
         public static final int img_resultgrid=0x7f090001;
-        public static final int menu_item_share=0x7f090010;
+        public static final int menu_item_share=0x7f090012;
+        public static final int panel_content=0x7f09000e;
         public static final int spinner_imageColor=0x7f090005;
         public static final int spinner_imageFileType=0x7f090007;
         public static final int spinner_imageSize=0x7f090003;
@@ -161,6 +163,7 @@ containing a value of this type.
     public static final class xml {
         public static final int item_image_result=0x7f040000;
         public static final int searchable=0x7f040001;
+        public static final int staggerd_item_image=0x7f040002;
     }
     public static final class styleable {
         /** Attributes that can be used with a StaggeredGridView.
