@@ -17,6 +17,7 @@ import android.widget.ShareActionProvider;
 
 import com.github.rutvijkumar.imagesearch.R;
 import com.github.rutvijkumar.imagesearch.models.ImageResult;
+import com.github.rutvijkumar.imagesearch.ui.ZoomInZoomOut;
 import com.loopj.android.image.SmartImageTask.OnCompleteListener;
 import com.loopj.android.image.SmartImageView;
 
@@ -37,10 +38,14 @@ public class ImageDisplayActivity extends Activity {
 		
 		ivImage.setImageUrl(result.getImageUrl(),R.drawable.image_not_available,R.drawable.loading,new OnCompleteListener() {
 
+			public void onComplete() {
+				//Do Nothing
+			}
 			@Override
 			public void onComplete(Bitmap bitmap) {
 				// TODO Auto-generated method stub
 				fileUrl=getImageUri(bitmap);
+				ivImage.setOnTouchListener(new ZoomInZoomOut());
 			}
 			
 		});
