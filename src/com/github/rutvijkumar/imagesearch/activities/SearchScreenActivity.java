@@ -234,7 +234,7 @@ public class SearchScreenActivity extends FragmentActivity  implements OnScrollL
 			int visibleItemCount, int totalItemCount) {
 		// TODO Auto-generated method stub
 		
-		Log.d("INFINITE_SCROLL", )
+		Log.d("INFINITE_SCROLL","onScroll called ******************************");
 	}
 
 }
