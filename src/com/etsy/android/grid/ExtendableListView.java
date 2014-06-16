@@ -786,6 +786,7 @@ public abstract class ExtendableListView extends AbsListView {
                 mActivePointerId = INVALID_POINTER;
                 recycleVelocityTracker();
                 reportScrollStateChange(OnScrollListener.SCROLL_STATE_IDLE);
+                
                 break;
             }
 

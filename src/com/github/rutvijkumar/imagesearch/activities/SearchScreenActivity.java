@@ -12,15 +12,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.SearchView;
@@ -38,7 +35,7 @@ import com.github.rutvijkumar.imagesearch.fragments.SettingsDialog;
 import com.github.rutvijkumar.imagesearch.helpers.EndlessScrollListener;
 import com.github.rutvijkumar.imagesearch.models.ImageResult;
 
-public class SearchScreenActivity extends FragmentActivity  implements OnScrollListener{
+public class SearchScreenActivity extends FragmentActivity  {
 
 	private List<ImageResult> imageResults = new ArrayList<ImageResult>();
 	//private ImageResultAdapter adapter;
@@ -97,18 +94,18 @@ public class SearchScreenActivity extends FragmentActivity  implements OnScrollL
 			}
 		});
 		
-		imagesGridView.setOnScrollListener(this);
-//		imagesGridView.setOnScrollListener(new EndlessScrollListener() {
-//
-//			@Override
-//			public void onLoadMore(int page, int totalItemsCount) {
-//				search(page);
-//			}
-//		});
+		
+		imagesGridView.setOnScrollListener(new EndlessScrollListener() {
+
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+				search(page);
+			}
+		});
 	    Intent intent = getIntent();
 	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 	      String query = intent.getStringExtra(SearchManager.QUERY);
-	      Toast.makeText(this, "Voice Search : "+query, Toast.LENGTH_LONG).show();
+	      Toast.makeText(this, "Searching : "+query, Toast.LENGTH_LONG).show();
 	      newSearch(query);
 	    }
 
@@ -219,22 +216,6 @@ public class SearchScreenActivity extends FragmentActivity  implements OnScrollL
 				return false;
 			}
 		});
-	}
-
-
-	@Override
-	public void onScrollStateChanged(AbsListView view, int scrollState) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onScroll(AbsListView view, int firstVisibleItem,
-			int visibleItemCount, int totalItemCount) {
-		// TODO Auto-generated method stub
-		
-		Log.d("INFINITE_SCROLL","onScroll called ******************************");
 	}
 
 }
