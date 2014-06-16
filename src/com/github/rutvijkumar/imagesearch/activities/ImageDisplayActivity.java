@@ -8,26 +8,25 @@ import java.util.UUID;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
-import android.view.Window;
 import android.widget.ShareActionProvider;
 
 import com.github.rutvijkumar.imagesearch.R;
 import com.github.rutvijkumar.imagesearch.models.ImageResult;
+import com.loopj.android.image.SmartImageTask.OnCompleteListener;
 import com.loopj.android.image.SmartImageView;
 
 public class ImageDisplayActivity extends Activity {
 
 	private ShareActionProvider shareActionProvider;
-	SmartImageView ivImage;
-	ImageResult result;
-
+	private SmartImageView ivImage;
+	private ImageResult result;
+	private Uri fileUrl;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,8 +34,16 @@ public class ImageDisplayActivity extends Activity {
 		setContentView(R.layout.activity_image_display);
 		result = (ImageResult) getIntent().getParcelableExtra("fullImageInfo");
 		ivImage = (SmartImageView) findViewById(R.id.fullViewImage);
-		ivImage.setImageUrl(result.getImageUrl());
+		
+		ivImage.setImageUrl(result.getImageUrl(),R.drawable.image_not_available,R.drawable.loading,new OnCompleteListener() {
 
+			@Override
+			public void onComplete(Bitmap bitmap) {
+				// TODO Auto-generated method stub
+				fileUrl=getImageUri(bitmap);
+			}
+			
+		});
 	}
 
 	@Override
@@ -48,19 +55,10 @@ public class ImageDisplayActivity extends Activity {
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	private Bitmap getBitMap() {
-		Drawable drawable = ivImage.getDrawable();
-		if (drawable instanceof BitmapDrawable) {
-			return ((BitmapDrawable) drawable).getBitmap();
-		} else {
-			return null;
-		}
-	}
 
-	private Uri getImageUri() {
+	private Uri getImageUri(Bitmap bitmap) {
 		FileOutputStream out = null;
 		Uri fileUrl = null;
-		Bitmap bitmap = getBitMap();
 		if (bitmap != null) {
 		
 			try {
@@ -86,7 +84,7 @@ public class ImageDisplayActivity extends Activity {
 		Intent shareIntent = new Intent(Intent.ACTION_SEND);
 		shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 		shareIntent.setType("image/*");
-		shareIntent.putExtra(Intent.EXTRA_STREAM, getImageUri());
+		shareIntent.putExtra(Intent.EXTRA_STREAM, fileUrl);
 		return shareIntent;
 
 	}

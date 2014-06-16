@@ -6,6 +6,7 @@
 
     <com.loopj.android.image.SmartImageView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_centerHorizontal="true"
         android:id="@+id/fullViewImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
