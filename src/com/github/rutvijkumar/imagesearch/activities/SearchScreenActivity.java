@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.json.JSONArray;
 
+import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
@@ -37,6 +41,30 @@ public class SearchScreenActivity extends FragmentActivity {
 	private GridView imagesGridView;
 	private String searchKeyword;
 	private SearchFilter filter=new SearchFilter();
+	private SearchView searchView;
+
+	@Override
+    protected void onNewIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            newSearch(query);
+        }
+    }
+	
+
+	/****
+	 * Todo
+	 * @param context
+	 */
+	public static void closeKeyboard(Context context) {
+	        try {
+	            InputMethodManager inputManager = (InputMethodManager) ((Activity) context).getSystemService(Context.INPUT_METHOD_SERVICE);
+	            inputManager.hideSoftInputFromWindow(((FragmentActivity) context).getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+	        }
+	        catch (Exception e) {
+	            // TODO:ERROR CLOSING KEYBOARD
+	        }
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +92,17 @@ public class SearchScreenActivity extends FragmentActivity {
 				search(page);
 			}
 		});
+	    Intent intent = getIntent();
+	    if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+	      String query = intent.getStringExtra(SearchManager.QUERY);
+	      Toast.makeText(this, "Voice Search : "+query, Toast.LENGTH_LONG).show();
+	      newSearch(query);
+	    }
+
 
 	}
 
 	private void search(int start) {
-
 		ImageProvider imageProvider = ImageProviders
 				.getDefaultImageProvider(this.filter);
 		imageProvider.searchImages(this.searchKeyword, start, new CallBack() {
@@ -111,8 +145,12 @@ public class SearchScreenActivity extends FragmentActivity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.searchview_in_menu, menu);
 		MenuItem searchItem = menu.findItem(R.id.action_search);
-		SearchView mSearchView = (SearchView) searchItem.getActionView();
-		setupSearchView(mSearchView);
+		searchView = (SearchView) searchItem.getActionView();
+		setupSearchView(searchView);
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+	    searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+	    
+	 
 		return true;
 	}
 
@@ -141,7 +179,8 @@ public class SearchScreenActivity extends FragmentActivity {
 
 	}
 
-	private void setupSearchView(SearchView searchView) {
+	private void setupSearchView(final SearchView searchView) {
+		
 
 		searchView.setOnQueryTextListener(new OnQueryTextListener() {
 

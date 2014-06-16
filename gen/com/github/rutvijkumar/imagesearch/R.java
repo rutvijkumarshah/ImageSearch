@@ -83,5 +83,6 @@ public final class R {
     }
     public static final class xml {
         public static final int item_image_result=0x7f040000;
+        public static final int searchable=0x7f040001;
     }
 }
