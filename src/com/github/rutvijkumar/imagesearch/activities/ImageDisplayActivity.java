@@ -29,32 +29,60 @@ public class ImageDisplayActivity extends Activity {
 	private ShareActionProvider shareActionProvider;
 	private Uri fileUrl;
 	private String appName = null;
+	private Bitmap bitmap = null;
+
+	private final String IMG_BITMAP = "IMG_BITMAP";
+	private final String IMG_URL = "IMG_URL";
+	private final String APP_NAME = "APP_NAME";
+	
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putParcelable(IMG_BITMAP, bitmap);
+		outState.putParcelable(IMG_URL, fileUrl);
+		outState.putString(APP_NAME, appName);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		boolean isSavedState = (savedInstanceState != null);
+
 		ImageResult result = null;
 		appName = getResources().getString(R.string.app_name);
 		setContentView(R.layout.activity_image_display);
 
 		result = (ImageResult) getIntent().getParcelableExtra("fullImageInfo");
 		final SmartImageView ivImage = (SmartImageView) findViewById(R.id.fullViewImage);
-		ivImage.setImageUrl(result.getImageUrl(),
-				R.drawable.image_not_available, R.drawable.loading,
-				new OnCompleteListener() {
+		if (isSavedState) {
+			// screen rotated, no need to make Network call using already loaded Bitmap
+			bitmap=(Bitmap) savedInstanceState.getParcelable(IMG_BITMAP);
+			fileUrl=(Uri)savedInstanceState.getParcelable(IMG_URL);
+			appName=savedInstanceState.getString(APP_NAME);
+			ivImage.setImageBitmap(bitmap);
 
-					public void onComplete() {
-						// Do Nothing
-					}
+		} else {
+			//Fresh Activity
+			ivImage.setImageUrl(result.getImageUrl(),
+					R.drawable.image_not_available, R.drawable.loading,
+					new OnCompleteListener() {
 
-					@Override
-					public void onComplete(Bitmap bitmap) {
-						// TODO Auto-generated method stub
-						fileUrl = getImageUri(bitmap);
-						ivImage.setOnTouchListener(new ZoomInZoomOut());
-					}
+						public void onComplete() {
+							// Do Nothing
+						}
 
-				});
+						@Override
+						public void onComplete(Bitmap bitMap) {
+							// TODO Auto-generated method stub
+							fileUrl = getImageUri(bitmap);
+							bitmap=bitMap;
+							ivImage.setOnTouchListener(new ZoomInZoomOut());
+						}
+
+					});
+		}
+
 	}
 
 	@Override
@@ -68,20 +96,22 @@ public class ImageDisplayActivity extends Activity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if(item.getItemId() == R.id.action_download) {
+		if (item.getItemId() == R.id.action_download) {
 			showDownload();
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	/****
-	 * All displayed file are download implicitly in order to make them shareable with other applications.
-	 * In case of download action just need to display path of downloaded file
+	 * All displayed file are download implicitly in order to make them
+	 * shareable with other applications. In case of download action just need
+	 * to display path of downloaded file
 	 * 
 	 * 
 	 */
 	private void showDownload() {
-		Toast.makeText(this, "File Downloaded at :"+fileUrl, Toast.LENGTH_LONG).show();
+		Toast.makeText(this, "File Downloaded at :" + fileUrl,
+				Toast.LENGTH_LONG).show();
 	}
 
 	private String getFileName(String title, Bitmap bitmap) throws IOException {

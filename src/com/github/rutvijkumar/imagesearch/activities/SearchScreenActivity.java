@@ -56,6 +56,7 @@ public class SearchScreenActivity extends FragmentActivity {
 		super.onSaveInstanceState(bundle);
 		bundle.putSerializable(SEARCH_FILTER, filter);
 		bundle.putString(SEARCH_KEYWORD, searchKeyword);
+		
 	}
 	@Override
 	protected void onNewIntent(Intent intent) {
