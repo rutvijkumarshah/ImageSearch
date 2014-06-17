@@ -144,7 +144,10 @@ public class SearchScreenActivity extends FragmentActivity {
 		if(!Util.isNetworkAvailable(this)) {
 			Toast.makeText(this, R.string.toast_nw_unavailable,
 					Toast.LENGTH_LONG).show();
-			return ;
+			return;
+		}
+		if(this.searchKeyword == null || this.searchKeyword.trim().isEmpty()) {
+			return;
 		}
 		setProgressBarIndeterminateVisibility(true);
 		ImageProvider imageProvider = ImageProviders
