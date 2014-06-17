@@ -7,14 +7,6 @@ Time spent: 40 hours spent in total.
 
 Completed user stories:
 
- * [x] Required: User is displayed the tip of specified percentage for specified entered amount
- * [x] Required: User enters the total amount of the transaction
- * [x] Required: User can select between tip amounts (i.e 10%, 15%, 20%)
- * [x] Required: Upon selecting tip amount, formatted tip value is displayed
- * [x] Optional: User changes the total amount and updated tip is reflected automatically
- 
-Completed user stories:
-
  * [x] Required: User can enter a search query that will display a grid of image results from the Google Image API.
  * [x] Required: User can click on "settings" which allows selection of advanced search options to filter results
  * [x] Required: User can configure advanced search filters such as:
