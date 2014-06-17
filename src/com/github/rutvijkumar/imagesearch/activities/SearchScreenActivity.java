@@ -48,6 +48,15 @@ public class SearchScreenActivity extends FragmentActivity {
 	private SearchFilter filter = new SearchFilter();
 	private SearchView searchView;
 
+	private final static String  SEARCH_FILTER="SEARCH_FILTER";
+	private final static String  SEARCH_KEYWORD="SEARCH_KEYWORD";
+	
+	@Override
+	protected void onSaveInstanceState(Bundle bundle) {
+		super.onSaveInstanceState(bundle);
+		bundle.putSerializable(SEARCH_FILTER, filter);
+		bundle.putString(SEARCH_KEYWORD, searchKeyword);
+	}
 	@Override
 	protected void onNewIntent(Intent intent) {
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -74,14 +83,17 @@ public class SearchScreenActivity extends FragmentActivity {
 		}
 
 		catch (Exception e) {
-			// TODO:ERROR CLOSING KEYBOARD
-			e.printStackTrace();
 		}
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		boolean isSavedState =(savedInstanceState!=null);
 		super.onCreate(savedInstanceState);
+		if(isSavedState) {
+			filter=(SearchFilter)savedInstanceState.getSerializable(SEARCH_FILTER);
+			searchKeyword=savedInstanceState.getString(SEARCH_KEYWORD);
+		}
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_search_screen);
 		imagesGridView = (StaggeredGridView) findViewById(R.id.img_resultgrid);
@@ -116,7 +128,10 @@ public class SearchScreenActivity extends FragmentActivity {
 					.show();
 			newSearch(query);
 		}
-
+		
+		if(isSavedState) {
+			newSearch(searchKeyword,true);
+		}
 	}
 
 	private void search(int start) {
