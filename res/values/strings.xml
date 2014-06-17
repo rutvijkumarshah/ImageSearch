@@ -6,7 +6,8 @@
     <string name="title_activity_image_display">Image Display</string>
  	<string name="toast_nw_unavailable">Network connection is not available</string>
  	<string name="toast_search_in_progress">Searching : </string>
- 	<string name="toast_file_downloaded_at">File Already downloaded : </string>
+ 	<string name="toast_file_downloaded_at">Downloads : </string>
+ 	<string name="img_prefix">Image_Candy_</string>
  	
     <string-array name="imgsizes">
         <item>Any</item>

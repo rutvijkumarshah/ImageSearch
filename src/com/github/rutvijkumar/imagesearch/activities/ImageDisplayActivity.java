@@ -29,19 +29,19 @@ public class ImageDisplayActivity extends Activity {
 
 	private ShareActionProvider shareActionProvider;
 	private Uri fileUrl;
-	private String appName = null;
+	
 	private Bitmap bitmap = null;
 
 	private final String IMG_BITMAP = "IMG_BITMAP";
 	private final String IMG_URL = "IMG_URL";
-	private final String APP_NAME = "APP_NAME";
+	private final String IMG_PREFIX = "img_prefix";
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		outState.putParcelable(IMG_BITMAP, bitmap);
 		outState.putParcelable(IMG_URL, fileUrl);
-		outState.putString(APP_NAME, appName);
+		
 	}
 
 	@Override
@@ -52,7 +52,6 @@ public class ImageDisplayActivity extends Activity {
 		boolean isSavedState = (savedInstanceState != null);
 
 		ImageResult result = null;
-		appName = getResources().getString(R.string.app_name);
 		setContentView(R.layout.activity_image_display);
 
 		result = (ImageResult) getIntent().getParcelableExtra("fullImageInfo");
@@ -62,7 +61,6 @@ public class ImageDisplayActivity extends Activity {
 			// Bitmap
 			bitmap = (Bitmap) savedInstanceState.getParcelable(IMG_BITMAP);
 			fileUrl = (Uri) savedInstanceState.getParcelable(IMG_URL);
-			appName = savedInstanceState.getString(APP_NAME);
 			ivImage.setImageBitmap(bitmap);
 
 		} else {
@@ -152,7 +150,7 @@ public class ImageDisplayActivity extends Activity {
 		if (bitmap != null) {
 			try {
 
-				String fileName = getFileName(appName, bitmap);
+				String fileName = getFileName(IMG_PREFIX, bitmap);
 				File file = new File(
 						Environment
 								.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
