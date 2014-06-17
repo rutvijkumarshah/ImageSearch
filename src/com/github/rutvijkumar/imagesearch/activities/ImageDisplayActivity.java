@@ -96,7 +96,7 @@ public class ImageDisplayActivity extends Activity {
 								}
 								bitmap = bitMap;
 								ivImage.setOnTouchListener(new ZoomInZoomOut());
-								setProgressBarIndeterminateVisibility(false);
+								setProgressBarIndeterminateVisibility(false);	
 							}
 
 						});

@@ -18,7 +18,7 @@
             android:layout_width="96dp"
             android:textSize="20sp"
             android:layout_height="wrap_content"
-            android:text="Size:" />
+            android:text="@string/size_" />
 
         <!-- Using 0dp for better performance -->
         <Spinner
@@ -41,7 +41,7 @@
             android:layout_width="96dp"
             android:textSize="20sp"
             android:layout_height="wrap_content"
-            android:text="Color:" />
+            android:text="@string/color_" />
 
         <Spinner
             android:id="@+id/spinner_imageColor"
@@ -63,7 +63,7 @@
             android:layout_width="96dp"
             android:textSize="20sp"
             android:layout_height="wrap_content"
-            android:text="FileType:" />
+            android:text="@string/filetype_" />
 
         <Spinner
             android:id="@+id/spinner_imageFileType"
@@ -85,7 +85,7 @@
             android:layout_width="96dp"
             android:textSize="20sp"
             android:layout_height="wrap_content"
-            android:text="Type:" />
+            android:text="@string/type_" />
 
         <Spinner
             android:id="@+id/spinner_imageType"
@@ -96,7 +96,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/imageType_block"
+        android:id="@+id/imageSite_block"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -108,7 +108,7 @@
             android:layout_width="96dp"
             android:textSize="20sp"
             android:layout_height="wrap_content"
-            android:text="Site:" />
+            android:text="@string/site_" />
 
         <EditText
             android:id="@+id/et_site"
@@ -134,7 +134,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:text="Cancle"
+            android:text="@string/cancle"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Button
@@ -143,7 +143,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:text="Search"
+            android:text="@string/search"
             android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 

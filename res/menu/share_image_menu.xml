@@ -7,10 +7,10 @@
         android:enabled="true"
         android:icon="@drawable/ic_action_share"
         android:showAsAction="ifRoom"
-        android:title="Share"/>
+        android:title="@string/share"/>
 
     <item android:id="@+id/action_download"
-          android:title="Download"
+          android:title="@string/download"
           android:icon="@drawable/ic_action_download"
           android:showAsAction="always"
       />

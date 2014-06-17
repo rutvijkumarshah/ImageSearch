@@ -6,7 +6,7 @@
     <string name="title_activity_image_display">Image Display</string>
  	<string name="toast_nw_unavailable">Network connection is not available</string>
  	<string name="toast_search_in_progress">Searching : </string>
- 	<string name="toast_file_downloaded_at">File Downloaded at : </string>
+ 	<string name="toast_file_downloaded_at">File Already downloaded : </string>
  	
     <string-array name="imgsizes">
         <item>Any</item>
@@ -48,6 +48,16 @@
             <item>gif</item>
             <item>bmp</item>
      </string-array>
+            <string name="size_">Size:</string>
+            <string name="color_">Color:</string>
+            <string name="filetype_">FileType:</string>
+            <string name="type_">Type:</string>
+            <string name="site_">Site:</string>
+            <string name="cancle">Cancle</string>
+            <string name="search">Search</string>
+            <string name="filter">Filter</string>
+            <string name="share">Share</string>
+            <string name="download">Download</string>
      
      
 </resources>

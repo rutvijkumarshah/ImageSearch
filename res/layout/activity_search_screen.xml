@@ -16,16 +16,4 @@
     app:item_margin="16dp"
     app:column_count="2" />
      
-
-  <!-- 
-    <GridView
-        android:id="@+id/img_resultgrid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="16dp"
-        android:numColumns="3" >
-    </GridView>
-  -->
 </RelativeLayout>
