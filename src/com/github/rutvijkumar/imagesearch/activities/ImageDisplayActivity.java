@@ -74,8 +74,7 @@ public class ImageDisplayActivity extends Activity {
 
 						@Override
 						public void onComplete(Bitmap bitMap) {
-							// TODO Auto-generated method stub
-							fileUrl = getImageUri(bitmap);
+							fileUrl = getImageUri(bitMap);
 							bitmap=bitMap;
 							ivImage.setOnTouchListener(new ZoomInZoomOut());
 						}
