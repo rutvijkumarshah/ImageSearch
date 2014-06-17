@@ -35,6 +35,7 @@ import com.github.rutvijkumar.imagesearch.api.SearchFilter;
 import com.github.rutvijkumar.imagesearch.fragments.SettingsDialog;
 import com.github.rutvijkumar.imagesearch.helpers.EndlessScrollListener;
 import com.github.rutvijkumar.imagesearch.models.ImageResult;
+import com.github.rutvijkumar.imagesearch.util.Util;
 
 public class SearchScreenActivity extends FragmentActivity {
 
@@ -125,7 +126,8 @@ public class SearchScreenActivity extends FragmentActivity {
 		Intent intent = getIntent();
 		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			String query = intent.getStringExtra(SearchManager.QUERY);
-			Toast.makeText(this, "Searching : " + query, Toast.LENGTH_LONG)
+			
+			Toast.makeText(this, getResources().getString(R.string.toast_search_in_progress)+ query, Toast.LENGTH_LONG)
 					.show();
 			newSearch(query);
 		}
@@ -135,10 +137,16 @@ public class SearchScreenActivity extends FragmentActivity {
 		}
 	}
 
+	
+	
 	private void search(int start) {
-
-		setProgressBarIndeterminateVisibility(true);
 		closeKeyboard(this);
+		if(!Util.isNetworkAvailable(this)) {
+			Toast.makeText(this, R.string.toast_nw_unavailable,
+					Toast.LENGTH_LONG).show();
+			return ;
+		}
+		setProgressBarIndeterminateVisibility(true);
 		ImageProvider imageProvider = ImageProviders
 				.getDefaultImageProvider(this.filter);
 		imageProvider.searchImages(this.searchKeyword, start, new CallBack() {
@@ -153,8 +161,7 @@ public class SearchScreenActivity extends FragmentActivity {
 						adapter.addAll(images);
 					}
 				} else {
-					Toast.makeText(SearchScreenActivity.this,
-							"Network Connection is not available",
+					Toast.makeText(SearchScreenActivity.this, R.string.toast_nw_unavailable,
 							Toast.LENGTH_LONG).show();
 				}
 

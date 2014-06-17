@@ -18,7 +18,7 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMA
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
- ***/
+***/
 
 package com.github.rutvijkumar.imagesearch.util;
 
@@ -27,8 +27,23 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class ChecksumUtil {
+import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
+public class Util {
+
+	public static Boolean isNetworkAvailable(Activity activity) {
+		ConnectivityManager connectivityManager 
+        = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+		
+		boolean isNetworkAvailable=true;
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    isNetworkAvailable=( activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting());
+	    return isNetworkAvailable;
+	}
+	
 	public static String getMD5Sum(ByteArrayOutputStream byteOS) {
 		String md5Sum = null;
 		try {
@@ -43,5 +58,26 @@ public class ChecksumUtil {
 
 		}
 		return md5Sum;
+	}
+	
+	public static String getFileSizeString(long fileSize) {
+		 StringBuilder sb=new StringBuilder();
+		 String unit="KB";
+		 long size=(fileSize / 1024);
+		 if(size > 1024) { 
+			 //more than 1024 KB
+			 size= (size /1024 );
+			 if(size > 1024) {
+				 unit="GB";
+			 }
+			 unit="MB";
+		 }
+		 sb.append(size);
+		 sb.append(" ");
+		 sb.append(unit);
+		 
+		 return sb.toString();
+	 
+		
 	}
 }

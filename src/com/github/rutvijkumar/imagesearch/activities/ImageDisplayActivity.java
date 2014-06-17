@@ -14,13 +14,14 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import com.github.rutvijkumar.imagesearch.R;
 import com.github.rutvijkumar.imagesearch.models.ImageResult;
 import com.github.rutvijkumar.imagesearch.ui.ZoomInZoomOut;
-import com.github.rutvijkumar.imagesearch.util.ChecksumUtil;
+import com.github.rutvijkumar.imagesearch.util.Util;
 import com.loopj.android.image.SmartImageTask.OnCompleteListener;
 import com.loopj.android.image.SmartImageView;
 
@@ -34,7 +35,6 @@ public class ImageDisplayActivity extends Activity {
 	private final String IMG_BITMAP = "IMG_BITMAP";
 	private final String IMG_URL = "IMG_URL";
 	private final String APP_NAME = "APP_NAME";
-	
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
@@ -47,6 +47,8 @@ public class ImageDisplayActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
 		boolean isSavedState = (savedInstanceState != null);
 
 		ImageResult result = null;
@@ -56,30 +58,50 @@ public class ImageDisplayActivity extends Activity {
 		result = (ImageResult) getIntent().getParcelableExtra("fullImageInfo");
 		final SmartImageView ivImage = (SmartImageView) findViewById(R.id.fullViewImage);
 		if (isSavedState) {
-			// screen rotated, no need to make Network call using already loaded Bitmap
-			bitmap=(Bitmap) savedInstanceState.getParcelable(IMG_BITMAP);
-			fileUrl=(Uri)savedInstanceState.getParcelable(IMG_URL);
-			appName=savedInstanceState.getString(APP_NAME);
+			// screen rotated, no need to make Network call using already loaded
+			// Bitmap
+			bitmap = (Bitmap) savedInstanceState.getParcelable(IMG_BITMAP);
+			fileUrl = (Uri) savedInstanceState.getParcelable(IMG_URL);
+			appName = savedInstanceState.getString(APP_NAME);
 			ivImage.setImageBitmap(bitmap);
 
 		} else {
-			//Fresh Activity
-			ivImage.setImageUrl(result.getImageUrl(),
-					R.drawable.image_not_available, R.drawable.loading,
-					new OnCompleteListener() {
 
-						public void onComplete() {
-							// Do Nothing
-						}
+			if (!Util.isNetworkAvailable(this)) {
+				Toast.makeText(this, R.string.toast_nw_unavailable,
+						Toast.LENGTH_LONG).show();
+				return;
+			} else {
+				// Freshly created Activity and Network Connection is available
+				setProgressBarIndeterminateVisibility(true);
+				ivImage.setImageUrl(result.getImageUrl(),
+						R.drawable.image_not_available,
+						android.R.color.transparent, new OnCompleteListener() {
 
-						@Override
-						public void onComplete(Bitmap bitMap) {
-							fileUrl = getImageUri(bitMap);
-							bitmap=bitMap;
-							ivImage.setOnTouchListener(new ZoomInZoomOut());
-						}
+							public void onComplete() {
+								// Do Nothing
+							}
 
-					});
+							@Override
+							public void onComplete(Bitmap bitMap) {
+								fileUrl = getImageUri(bitMap);
+								if (shareActionProvider != null) {
+									/***
+									 * in case bit map is very small it quickly
+									 * loads so by that time shareActionProvider
+									 * is not initialized
+									 */
+									shareActionProvider
+											.setShareIntent(getDefaultShareIntent());
+								}
+								bitmap = bitMap;
+								ivImage.setOnTouchListener(new ZoomInZoomOut());
+								setProgressBarIndeterminateVisibility(false);
+							}
+
+						});
+			}
+
 		}
 
 	}
@@ -109,7 +131,7 @@ public class ImageDisplayActivity extends Activity {
 	 * 
 	 */
 	private void showDownload() {
-		Toast.makeText(this, "File Downloaded at :" + fileUrl,
+		Toast.makeText(this, getResources().getString(R.string.toast_file_downloaded_at) + fileUrl,
 				Toast.LENGTH_LONG).show();
 	}
 
@@ -117,7 +139,7 @@ public class ImageDisplayActivity extends Activity {
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.PNG, 80, bos);
 		bos.flush();
-		String md5Sum = ChecksumUtil.getMD5Sum(bos);
+		String md5Sum = Util.getMD5Sum(bos);
 		StringBuilder sb = new StringBuilder();
 		sb.append(title).append("_").append(md5Sum).append(".").append("png");
 
@@ -128,7 +150,6 @@ public class ImageDisplayActivity extends Activity {
 		FileOutputStream out = null;
 		Uri fileUri = null;
 		if (bitmap != null) {
-
 			try {
 
 				String fileName = getFileName(appName, bitmap);
@@ -137,9 +158,7 @@ public class ImageDisplayActivity extends Activity {
 								.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
 						fileName);
 				if (file.exists()) {
-					fileUrl = Uri.fromFile(file);
-					Toast.makeText(this, "Duplicate File Detected",
-							Toast.LENGTH_LONG).show();
+					fileUri = Uri.fromFile(file);
 				} else {
 					out = new FileOutputStream(file);
 					bitmap.compress(Bitmap.CompressFormat.PNG, 80, out);
@@ -147,7 +166,7 @@ public class ImageDisplayActivity extends Activity {
 					out.close();
 					fileUri = Uri.fromFile(file);
 				}
-				Toast.makeText(this, "Size=" + (file.length() / 1024) + " KB",
+				Toast.makeText(this, Util.getFileSizeString(file.length()),
 						Toast.LENGTH_LONG).show();
 			} catch (IOException e) {
 				Log.e("IMAGE_DISPAY", e.getLocalizedMessage(), e);
@@ -160,7 +179,6 @@ public class ImageDisplayActivity extends Activity {
 	private Intent getDefaultShareIntent() {
 		Intent shareIntent = new Intent(Intent.ACTION_SEND);
 		shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-		// shareIntent.setType("image/*");
 		shareIntent.setType("image/png");
 		shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Attached Image");
 		shareIntent.putExtra(Intent.EXTRA_TEXT, "  ");

@@ -28,6 +28,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 
@@ -103,6 +106,8 @@ public class GoogleImageProvider extends ImageProvider {
 		return img;
 	}
 	
+	
+	
 	@Override
 	protected void process(final String url, final CallBack callback) {
 		AsyncHttpClient client=new AsyncHttpClient();
@@ -133,6 +138,8 @@ public class GoogleImageProvider extends ImageProvider {
 			@Override
 			public void onFailure(int statusCode, Throwable e,
 					JSONArray errorResponse) {
+				//While testing I found onFailure is not getting fired at all 
+				//even after simulating no network connection with airplane mode I dont see this call back getting executed.
 				 callback.onResult(false,null, errorResponse);
 			}
 		});
