@@ -91,12 +91,15 @@ containing a value of this type.
         public static final int item_margin=0x7f010003;
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int image_not_available=0x7f020001;
-        public static final int image_not_available2=0x7f020002;
-        public static final int loading=0x7f020003;
+        public static final int ic_action_download=0x7f020000;
+        public static final int ic_action_filter=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int image_not_available=0x7f020003;
+        public static final int image_not_available2=0x7f020004;
+        public static final int loading=0x7f020005;
     }
     public static final class id {
+        public static final int action_download=0x7f090013;
         public static final int action_filter=0x7f090011;
         public static final int action_search=0x7f090010;
         public static final int bt_block=0x7f09000b;

@@ -12,8 +12,8 @@
     
     <item android:id="@+id/action_filter"
           android:title="Filter"
-          android:icon="@android:drawable/ic_menu_camera"
+          android:icon="@drawable/ic_action_filter"
           android:showAsAction="always"
-      />      
+      />
     
 </menu>
