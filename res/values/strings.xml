@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ImageSearch</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Image Candy</string>
     <string name="search_hint">Search Images </string>
-    <string name="title_activity_image_display">ImageDisplay</string>
-
+    <string name="title_activity_image_display">Image Display</string>
+ 
     <string-array name="imgsizes">
         <item>Any</item>
         <item>Icon</item>
