@@ -44,4 +44,4 @@ Other Additional goodies :
 * Image duplication detection logic added which prevents app to keep dumping duplicate images to user's phone.
 * Closes Software keyboard on search fired.
 * Custom spinner for choosing colors.
-* Layered application design backend is loosely coupled with UI, provides async apis and callbacks.
+* Layered application design : Backend is loosely coupled with UI, provides async apis and callbacks.
