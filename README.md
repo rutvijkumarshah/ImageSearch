@@ -1,6 +1,6 @@
-ImageCandy
+Image Candy
 ===========
-ImageCandy is an android app to search images from various search engines, as of now google is only provider supported.
+Image Candy is an android app to search images from various search engines, as of now google is only provider supported.
 Application's backend supports easy to hook any other search engine/image provider.
 
 Time spent: 40 hours spent in total.
