@@ -31,3 +31,18 @@ The following advanced user stories are optional and completed:
 
 * [x] Bonus: Use the StaggeredGridView to display visually interesting image results
 * [x] Bonus: User can zoom or pan images displayed in full-screen detail view
+
+
+
+Other Additional goodies 
+* Voice Search
+* Screen rotation supported in all activities and by saving instance data in Bundle.
+* Shows Progress bar when search is going on
+* Shows Progress bar when search is going on when image is downloading in full screen activity
+* Handeling edge case where origional image url is not available by showing "Image not available" image.
+* Updated SmartImageView with additional interface to get handle of Bitmap, so getting bitmap is certain and can handle ColorDrawable image instances.
+  Pull request to SmartImageView
+* Image duplication detection logic added which prevents app to keep dumping duplicate images to user's phone.
+* Closes Software keyboard on search fired.
+* Custom spinner for choosing colors.
+* Layered application design backend is loosely coupled with UI, provides async apis and callbacks.
