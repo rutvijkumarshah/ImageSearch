@@ -38,7 +38,7 @@ Other Additional goodies :
 * Screen rotation supported in all activities,uses diffrent layouts for different orientation in search screen.
 * Saving filter and full image during rotation avoids unnecessary user input and network call respectively.
 * Shows Progress bar when search is going on.
-* Shows Progress bar when search is going on when image is downloading in full screen activity
+* Shows Progress bar when image is downloading in full screen activity
 * Handles edge case where origional image url is not available by showing "Image not available" image.
 * Updated SmartImageView with additional interface to get handle of Bitmap, so getting bitmap is certain and can handle ColorDrawable image instances.
   Pull request to SmartImageView
