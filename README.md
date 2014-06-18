@@ -39,7 +39,7 @@ Other Additional goodies :
 * Saving filter and full image during rotation avoids unnecessary user input and network call respectively.
 * Shows Progress bar when search is going on.
 * Shows Progress bar when search is going on when image is downloading in full screen activity
-* Handeling edge case where origional image url is not available by showing "Image not available" image.
+* Handles edge case where origional image url is not available by showing "Image not available" image.
 * Updated SmartImageView with additional interface to get handle of Bitmap, so getting bitmap is certain and can handle ColorDrawable image instances.
   Pull request to SmartImageView
 * Image duplication detection logic added which prevents app to keep dumping duplicate images to user's phone.
