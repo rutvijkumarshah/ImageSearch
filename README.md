@@ -57,3 +57,5 @@ Third Party Utilities/source used for building this app:
  4. Etsy StaggeredGridView 
  5. Source code of ZoomInZoomOut.java from StackOverflow question
  
+Video walkthrough of all user stories:
+Please see video ![Video ](http://vimeo.com/98584284)
