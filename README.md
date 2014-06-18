@@ -46,3 +46,10 @@ Other Additional goodies :
 * Closes Software keyboard on search fired.
 * Custom spinner for choosing colors.
 * Layered application design : Backend is loosely coupled with UI, provides async apis and callbacks.
+
+
+Third Party Utilities used for building this app:
+1. SmartImageView
+2. UniversalImageLoader
+3. Source code of ZoomInZoomOut.java from StackOverflow question
+4. Etsy StaggeredGridView
