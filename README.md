@@ -1,4 +1,4 @@
-Image Candy
+Image Candy ![Video ](screens/imgcandy.png)
 ===========
 Image Candy is an android app to search images from various search engines, as of now google is only provider supported.
 Application's backend supports easy to hook any other search engine/image provider.
@@ -21,8 +21,6 @@ Completed user stories:
 * [x] Required: User can scroll down “infinitely” to continue loading more image results (up to 8 pages)
  
 
-The following advanced user stories are optional and completed:
-
 * [x] Advanced: Robust error handling, check if internet is available, handle error cases, network failures
 * [x] Advanced: Use the ActionBar SearchView or custom layout as the query box instead of an EditText
 * [x] Advanced: User can share an image to their friends or email it to themselves
@@ -34,7 +32,8 @@ The following advanced user stories are optional and completed:
 
 
 
-Other Additional goodies 
+Other Additional goodies :
+
 * Voice Search
 * Screen rotation supported in all activities and by saving instance data in Bundle.
 * Shows Progress bar when search is going on
